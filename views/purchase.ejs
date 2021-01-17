@@ -4,7 +4,8 @@
 
 <head>
 	<link rel="stylesheet" href="/public/style/style.css">
-	<title>Purchase画面</title>
+  <title>Purchase画面</title>
+  <%- include("./_share/output.ejs") %>
 </head>
 
 <body>
@@ -13,15 +14,17 @@
 
 		<div class="box">
 			<h1 class="item">A</h1>
-			<form class="purchase_button_area" action="/top/">
-				<button type="submit" class="purchase_button">Buy</button>
+      <form class="purchase_button_area" action="/output/" method="get">
+        <input type="hidden" name="item" value="A">       
+				<button type="submit" class="purchase_button" onclick="output(29);">buy</button>
 			</form>
-		</div>
-
-		<div class="box">
+    </div>
+    
+    <div class="box">
 			<h1 class="item">B</h1>
-			<form class="purchase_button_area" action="/top/">
-				<button type="submit" class="purchase_button">Buy</button>
+			<form class="purchase_button_area" action="/output/" method="get">
+				<input type="hidden" name="item" value="B">
+				<button type="submit" class="purchase_button" onclick="output(30);">buy</button>
 			</form>
 		</div>
 
