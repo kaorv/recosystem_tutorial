@@ -13,7 +13,7 @@ class historyViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let stringUrl = "http://'macのIPアドレス':8000/detail.php"
+        let stringUrl = "http://'パブリックIP':8000/detail.php"
         let url = URL(string: stringUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
         let req = URLRequest(url: url)
         let task = URLSession.shared.dataTask(
