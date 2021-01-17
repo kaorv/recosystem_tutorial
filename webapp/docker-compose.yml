@@ -1,0 +1,66 @@
+version: '3'
+services:
+
+  mysql:
+    image: mysql:5.7
+    env_file: ./mysql/mysql.env
+    environment:
+      - TZ=Asia/Tokyo
+      - BIND-ADDRESS=0.0.0.0
+    ports:
+      - '3306:3306'
+    container_name: mysql
+    volumes:
+      - ./mysql/conf:/etc/mysql/conf.d/:ro
+      - mysqldata:/var/lib/mysql
+    networks:
+      - backend
+
+  php:
+    build: php_api
+    volumes:
+      - upload:/var/www/html
+    ports:
+      - 8000:80
+    container_name: php
+    networks:
+      - backend
+
+  app:
+    build: webapp_node
+    environment:
+      - TZ=Asia/Tokyo
+      - DEBUG=app:*
+    container_name: app
+    tty: true
+    ports:
+      - "49160:8080"
+    volumes:
+      - upload:/app/upload
+    working_dir: /app
+    networks:
+      - backend
+    depends_on:
+      - mysql
+
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    environment:
+    - PMA_ARBITRARY=1
+    - PMA_HOSTS=mysql
+    - PMA_USER=root
+    - PMA_PASSWORD=passwords
+    ports:
+    - 8070:80
+    depends_on:
+      - app
+    networks:
+      - backend
+
+networks:
+  backend:
+
+volumes:
+  mysqldata:
+  upload:
